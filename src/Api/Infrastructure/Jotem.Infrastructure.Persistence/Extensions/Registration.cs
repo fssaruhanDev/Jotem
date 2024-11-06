@@ -25,9 +25,9 @@ public static class Registration
 
 		});
 
-		var SeedData = new SeedData();
+		//var SeedData = new SeedData();
 
-		SeedData.SeedAsync(configuration).GetAwaiter().GetResult();
+		//SeedData.SeedAsync(configuration).GetAwaiter().GetResult();
 
 		services.AddScoped<IUserRepository, UserRepository>();
 
