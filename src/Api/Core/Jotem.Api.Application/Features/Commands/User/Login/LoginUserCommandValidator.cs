@@ -10,9 +10,8 @@ public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
 	public LoginUserCommandValidator()
 	{
 
-        RuleFor(i => i.Email)
+        RuleFor(i => i.UserName)
             .NotNull()
-            .EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible)
             .WithMessage("(PropertyName} not a valid email address");
 
         RuleFor(i => i.Password)

@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Jotem.Api.Application.Extensions;
+using Jotem.Common.Middlewares;
 using Jotem.Infrastructure.Persistence.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -61,6 +62,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 
 builder.Services.addInfastructureRegistration(builder.Configuration);
+builder.Services.addInfastructureRegistration(builder.Configuration);
 builder.Services.AddApplicationRegistration();
 
 var app = builder.Build();
@@ -71,6 +73,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<CurrentUserMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿
 using Jotem.Common.Models.RequestModels;
+using Jotem.Common.Models.RequestModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,14 @@ namespace Jotem.Api.WebAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginUserCommand loginUserCommand)
         {
             var res = await madiator.Send(loginUserCommand);
+            return Ok(res);
+        }
+
+        [HttpPost]
+        [Route("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserCommand updateUserCommand)
+        {
+            var res = await madiator.Send(updateUserCommand);
             return Ok(res);
         }
     }

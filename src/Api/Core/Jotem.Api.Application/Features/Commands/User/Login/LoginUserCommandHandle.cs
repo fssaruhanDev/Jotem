@@ -32,7 +32,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
 
     public async Task<LoginUserViewModel> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var dbUser = await userRepository.GetSingleAsync(i => i.EmailAddress == request.Email);
+        var dbUser = await userRepository.GetSingleAsync(i => i.UserName == request.UserName);
 
         if (dbUser == null)
             throw new DatabaseValidationException("User not found!");

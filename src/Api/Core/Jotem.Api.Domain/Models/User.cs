@@ -5,7 +5,7 @@ namespace Jotem.Api.Domain.Models
 	{
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
-        public string Avatar { get; set; }
+        public string? Avatar { get; set; }
 
         public string EmailAddress { get; set; }
 		public bool EmailConfirmed { get; set; }

@@ -13,6 +13,12 @@ public abstract class BaseEntityConfiguration<T> : IEntityTypeConfiguration<T> w
 
         builder.Property(i => i.ID).ValueGeneratedOnAdd();
 
-        builder.Property(i => i.CreateDate).ValueGeneratedOnAdd();
+        builder.Property(e => e.CreatedDate)
+               .HasColumnType("datetime2")
+               .IsRequired();
+
+        builder.Property(e => e.UpdatedDate)
+               .HasColumnType("datetime2")
+               .IsRequired(false);
     }
 }

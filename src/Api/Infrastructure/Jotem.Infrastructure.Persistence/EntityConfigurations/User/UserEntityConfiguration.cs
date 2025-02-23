@@ -11,7 +11,29 @@ public class UserEntityConfiguration : BaseEntityConfiguration<Jotem.Api.Domain.
     {
         base.Configure(builder);
 
-        builder.ToTable("user", EntityContext.DEFAULT_SCHEMA);
+        builder.ToTable("user");
+
+        builder.Property(p => p.FirstName)
+               .IsRequired()
+               .HasMaxLength(200);
+
+
+        builder.Property(p => p.LastName)
+               .IsRequired()
+               .HasMaxLength(200);
+
+        builder.Property(i => i.UserName)
+               .HasMaxLength(50)
+               .IsRequired();
+
+        builder.Property(p => p.Password)
+               .IsRequired()
+               .HasMaxLength(50);
+
+        builder.Property(i => i.EmailAddress)
+               .IsRequired()
+               .HasMaxLength(200);
+
     }
 }
 

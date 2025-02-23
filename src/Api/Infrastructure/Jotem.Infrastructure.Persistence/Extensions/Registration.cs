@@ -1,7 +1,9 @@
 ﻿using System;
 using Jotem.Api.Application.Interfaces.Repostrories;
 using Jotem.Infrastructure.Persistence.Context;
+using Jotem.Infrastructure.Persistence.EntityConfigurations.Interceptors;
 using Jotem.Infrastructure.Persistence.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +12,8 @@ namespace Jotem.Infrastructure.Persistence.Extensions;
 
 public static class Registration
 {
-	public static IServiceCollection addInfastructureRegistration(this IServiceCollection services,IConfiguration configuration)
+
+    public static IServiceCollection addInfastructureRegistration(this IServiceCollection services,IConfiguration configuration)
 	{
 
 		services.AddDbContext<EntityContext>(conf =>
@@ -31,6 +34,16 @@ public static class Registration
 
 		services.AddScoped<IUserRepository, UserRepository>();
 
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<SavingChangesInterceptor>();
+
+
+        // DbContext için interceptor ekleniyor
+        services.AddDbContext<EntityContext>((serviceProvider, optionsBuilder) =>
+        {
+            var interceptor = serviceProvider.GetRequiredService<SavingChangesInterceptor>();
+            optionsBuilder.AddInterceptors(interceptor);
+        });
         return services;
 	}
 }

@@ -14,7 +14,7 @@ internal class SeedData
 	{
         var result = new Faker<User>(locale:"tr")
             .RuleFor(i => i.ID, i => Guid.NewGuid())
-            .RuleFor(i => i.CreateDate, i => i.Date.Between(DateTime.Now.AddDays(-100), DateTime.Now))
+            .RuleFor(i => i.CreatedDate, i => i.Date.Between(DateTime.Now.AddDays(-100), DateTime.Now))
             .RuleFor(i => i.Avatar, i => i.Internet.Avatar())
             .RuleFor(i => i.FirstName, i => i.Person.FirstName)
             .RuleFor(i => i.LastName, i => i.Person.LastName)
