@@ -8,6 +8,8 @@ using Jotem.Common.Infrastructure;
 using Jotem.Common.Models.Queries;
 using Jotem.Common.Models.RequestModels;
 using Jotem.Infrastructure.Persistence.Exeptions;
+using Jotem.Infrastructure.Security.Settings;
+using Jotem.Infrastructure.Utilities.Logger.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -17,67 +19,73 @@ namespace ECommerce.Api.Application.Features.Commands.User;
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserViewModel>
 {
 
-
+    private readonly IJwtProvider _jwtProvider;
     private readonly IUserRepository userRepository;
     private readonly IMapper mapper;
-    private readonly IConfiguration configuration;
+    private readonly ILoggerService loggerService;
 
-    public LoginUserCommandHandler(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
+
+    public LoginUserCommandHandler(IUserRepository userRepository, IMapper mapper, IJwtProvider jwtProvider, ILoggerService loggerService)
     {
-        this.configuration = configuration;
         this.mapper = mapper;
         this.userRepository = userRepository;
-
+        this._jwtProvider = jwtProvider;
+        this.loggerService = loggerService;
     }
 
     public async Task<LoginUserViewModel> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
-        var dbUser = await userRepository.GetSingleAsync(i => i.UserName == request.UserName);
+        var logProps = new Dictionary<string, object>
+        {
+            ["UserName"] = request.UserName
+        };
 
+        loggerService.LogInformation("Processing LoginUserCommand.", logProps);
+
+        var dbUser = await userRepository.GetSingleAsync(i => i.UserName == request.UserName);
         if (dbUser == null)
+        {
+            loggerService.LogWarning("Login failed: user not found.", logProps);
             throw new DatabaseValidationException("User not found!");
+        }
 
         var pass = PasswordEncryptor.Encrypt(request.Password);
-
         if (dbUser.Password != pass)
+        {
+            loggerService.LogWarning("Login failed: password mismatch.", logProps);
             throw new DatabaseValidationException("Password is wrong!");
+        }
 
         if (!dbUser.EmailConfirmed)
+        {
+            loggerService.LogWarning("Login failed: email not confirmed.", logProps);
             throw new DatabaseValidationException("Email address is not confirm yet!");
+        }
 
+        // Kullanıcı gerçekten bulunduğuna göre UserId ekleyebiliriz
+        logProps["UserId"] = dbUser.ID;
 
         var result = mapper.Map<LoginUserViewModel>(dbUser);
 
         var claims = new Claim[]
-            {
-                new Claim(ClaimTypes. NameIdentifier, dbUser.ID.ToString()),
-                new Claim(ClaimTypes.Email, dbUser.EmailAddress),
-                new Claim(ClaimTypes.Name, dbUser.UserName),
-                new Claim(ClaimTypes.GivenName, dbUser.FirstName),
-                new Claim(ClaimTypes.Surname, dbUser.LastName)
-            };
+        {
+            new Claim(ClaimTypes.NameIdentifier, dbUser.ID.ToString()),
+            new Claim(ClaimTypes.Email, dbUser.EmailAddress),
+            new Claim(ClaimTypes.Name, dbUser.UserName),
+            new Claim(ClaimTypes.GivenName, dbUser.FirstName),
+            new Claim(ClaimTypes.Surname, dbUser.LastName)
+        };
 
+        var expDate = DateTime.Now.AddDays(10);
+        result.Token = _jwtProvider.GenerateToken(claims, expDate);
 
-        result.Token = GenerateToken(claims);
+        // Başarılı girişin logunu da tek satırda alıyoruz
+        loggerService.LogInformation("User logged in successfully.", logProps);
 
         return result;
-         
 
     }
 
-    private string GenerateToken(Claim[] claims)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Token:SecurityKey"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expiry = DateTime.Now.AddDays(10);
-        var token = new JwtSecurityToken(claims: claims,
-                                        expires: expiry,
-                                        issuer: configuration["Token:Issuer"],
-                                        audience: configuration["Token:Audience"],
-                                        signingCredentials: creds,
-                                        notBefore: DateTime.Now);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
-    }
+  
 }
 

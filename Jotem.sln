@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jotem.Common", "src\Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JotemClient", "src\Clients\Web\JotemClient\JotemClient.csproj", "{D2902E80-E87E-4407-B6A3-A90C4FDF16D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jotem.Infrastructure.Utilities", "src\Api\Infrastructure\Jotem.Infrastructure.Utilities\Jotem.Infrastructure.Utilities.csproj", "{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jotem.Infrastructure.Security", "src\Api\Infrastructure\Jotem.Infrastructure.Security\Jotem.Infrastructure.Security.csproj", "{FE2C6995-6ADF-4867-91F3-D9E64088486B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{D2902E80-E87E-4407-B6A3-A90C4FDF16D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2902E80-E87E-4407-B6A3-A90C4FDF16D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2902E80-E87E-4407-B6A3-A90C4FDF16D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2C6995-6ADF-4867-91F3-D9E64088486B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2C6995-6ADF-4867-91F3-D9E64088486B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2C6995-6ADF-4867-91F3-D9E64088486B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2C6995-6ADF-4867-91F3-D9E64088486B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +94,8 @@ Global
 		{AE628E36-90D6-48B1-BDAB-CC231B8B5877} = {824AC4BB-BD81-4560-9E33-C0E6D88B40DC}
 		{9EEB0C16-BABC-4661-8E8A-76CC1EFE4FBA} = {AEC6A213-8E8A-4044-BFC8-4D440F745BE5}
 		{D2902E80-E87E-4407-B6A3-A90C4FDF16D4} = {D1E0028D-26B8-4E03-8967-EE91DF376BC1}
+		{5BF8AD17-7C63-4383-B0BA-97C65ABDC0D2} = {28F288E9-C8DB-4C3C-A368-A0FFBF3FCBC8}
+		{FE2C6995-6ADF-4867-91F3-D9E64088486B} = {28F288E9-C8DB-4C3C-A368-A0FFBF3FCBC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2BE0AECE-1C99-4BE5-99A9-817D3B96DE24}
