@@ -99,13 +99,6 @@ app.UseMiddleware<CurrentUserMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 
 
-app.MapGet("/", (ILoggerService loggerService) =>
-{
-    loggerService.LogInformation("Hello from GET / !", new Dictionary<string, object> { ["Path"] = "/" });
-    return "Hello World!";
-});
-
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

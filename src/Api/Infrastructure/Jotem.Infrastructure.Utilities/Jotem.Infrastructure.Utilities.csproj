@@ -12,10 +12,10 @@
     <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Cache\" />
     <Folder Include="File\" />
     <Folder Include="Logger\Extensions\" />
   </ItemGroup>

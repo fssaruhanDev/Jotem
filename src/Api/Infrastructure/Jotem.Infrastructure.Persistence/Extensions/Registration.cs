@@ -19,7 +19,7 @@ public static class Registration
 		services.AddDbContext<EntityContext>(conf =>
 		{
 
-			var connectionString = configuration["ConnectionStrings"];
+			var connectionString = configuration["ConnectionStrings:ConnectionString"];
 
 			conf.UseSqlServer(connectionString, x =>
 			{
