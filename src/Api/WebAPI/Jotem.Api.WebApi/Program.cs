@@ -3,14 +3,15 @@ using Jotem.Api.Application.Extensions;
 using Jotem.Common.Middleware;
 using Jotem.Common.Middlewares;
 using Jotem.Infrastructure.Persistence.Extensions;
-using Jotem.Infrastructure.Security.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Serilog;
-using Jotem.Infrastructure.Utilities.Logger.Interfaces;
 using Jotem.Infrastructure.Utilities.Logger.Services;
+using Jotem.Infrastructure.Utilities.Logger.Extensions;
+using Jotem.Infrastructure.Utilities.Cache.Extensions;
+using Jotem.Infrastructure.Security.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,23 +68,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 //Log Settings
 #region log Settings
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.Console()
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(Log.Logger);
-builder.Services.AddSingleton<ILoggerService>(provider =>
-    new SerilogLoggerService(Log.Logger));
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration) 
-    .CreateLogger();
+
 #endregion
 
 // Registrations
-builder.Services.addSecurityRegistration();
-builder.Services.addInfastructureRegistration(builder.Configuration);
+builder.Services.AddLoggerRegistration(builder.Configuration);
+builder.Services.AddJWTRegistration(builder.Configuration);
+builder.Services.AddCacheRegistration(builder.Configuration);
+builder.Services.AddInfastructureRegistration(builder.Configuration);
 builder.Services.AddApplicationRegistration();
 
 var app = builder.Build();

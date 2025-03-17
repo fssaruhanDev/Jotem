@@ -13,7 +13,7 @@ namespace Jotem.Infrastructure.Persistence.Extensions;
 public static class Registration
 {
 
-    public static IServiceCollection addInfastructureRegistration(this IServiceCollection services,IConfiguration configuration)
+    public static IServiceCollection AddInfastructureRegistration(this IServiceCollection services,IConfiguration configuration)
 	{
 
 		services.AddDbContext<EntityContext>(conf =>

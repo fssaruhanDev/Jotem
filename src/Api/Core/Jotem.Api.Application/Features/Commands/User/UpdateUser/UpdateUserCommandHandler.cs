@@ -1,9 +1,9 @@
-﻿using Jotem.Api.Application.Interfaces.Repostrories;
+﻿using Jotem.Api.Application.Interfaces.Infrastructure.Utility.Logger;
+using Jotem.Api.Application.Interfaces.Repostrories;
 using Jotem.Common.Infrastructure;
 using Jotem.Common.Models.Event.User;
 using Jotem.Common.Models.RequestModels.User;
 using Jotem.Infrastructure.Persistence.Exeptions;
-using Jotem.Infrastructure.Utilities.Logger.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;

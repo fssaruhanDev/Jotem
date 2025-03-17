@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Jotem.Infrastructure.Security.Settings;
+namespace Jotem.Api.Application.Interfaces.infractucture.Security;
 
 public interface IJwtProvider
 {

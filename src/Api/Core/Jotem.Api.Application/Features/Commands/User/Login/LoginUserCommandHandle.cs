@@ -3,13 +3,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
+using Jotem.Api.Application.Interfaces.infractucture.Security;
+using Jotem.Api.Application.Interfaces.Infrastructure.Utility.Logger;
 using Jotem.Api.Application.Interfaces.Repostrories;
 using Jotem.Common.Infrastructure;
 using Jotem.Common.Models.Queries;
 using Jotem.Common.Models.RequestModels;
 using Jotem.Infrastructure.Persistence.Exeptions;
-using Jotem.Infrastructure.Security.Settings;
-using Jotem.Infrastructure.Utilities.Logger.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -62,7 +62,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
             throw new DatabaseValidationException("Email address is not confirm yet!");
         }
 
-        // Kullanıcı gerçekten bulunduğuna göre UserId ekleyebiliriz
         logProps["UserId"] = dbUser.ID;
 
         var result = mapper.Map<LoginUserViewModel>(dbUser);
@@ -79,7 +78,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
         var expDate = DateTime.Now.AddDays(10);
         result.Token = _jwtProvider.GenerateToken(claims, expDate);
 
-        // Başarılı girişin logunu da tek satırda alıyoruz
         loggerService.LogInformation("User logged in successfully.", logProps);
 
         return result;

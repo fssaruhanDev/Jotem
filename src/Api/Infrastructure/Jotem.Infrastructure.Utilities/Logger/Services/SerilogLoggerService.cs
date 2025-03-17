@@ -1,4 +1,5 @@
-﻿using Jotem.Infrastructure.Utilities.Logger.Interfaces;
+﻿
+using Jotem.Api.Application.Interfaces.Infrastructure.Utility.Logger;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;

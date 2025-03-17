@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using FluentValidation;
+using Jotem.Api.Application.Interfaces.infractucture.Utility.Cache;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,8 @@ public static class Registration
         services.AddMediatR(assm);
         services.AddAutoMapper(assm);
         services.AddValidatorsFromAssembly(assm);
+
+
 
         return services;
     }
