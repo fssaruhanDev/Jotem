@@ -60,52 +60,6 @@ namespace Jotem.Infrastructure.Persistence.Context
         }
 
 
-        //public override int SaveChanges()
-        //{
-        //	OnBeforeSave();
-        //	return base.SaveChanges();
-        //}
-
-        //public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        //{
-        //	OnBeforeSave();
-        //	return base.SaveChanges(acceptAllChangesOnSuccess);
-        //}
-
-        //public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        //{
-        //	OnBeforeSave();
-        //	return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        //}
-
-        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        //{
-        //	OnBeforeSave();
-        //	return base.SaveChangesAsync(cancellationToken);
-        //}
-
-        //public void OnBeforeSave()
-        //{
-        //	var addedEntities = ChangeTracker.Entries()
-        //									 .Where(x => x.State == EntityState.Added)
-        //									 .Select(x => (BaseEntity)x.Entity);
-
-        //	PreperedAddedEntities(addedEntities);
-
-        //}
-
-        //public void PreperedAddedEntities(IEnumerable<BaseEntity> entities)
-        //{
-
-        //	foreach (var entity in entities)
-        //	{
-        //		if(entity.CreateDate == DateTime.MinValue)
-        //			entity.CreateDate = DateTime.Now;
-        //		entity.ID = Guid.NewGuid();
-
-        //	}
-
-        //}
 
     }
 }
